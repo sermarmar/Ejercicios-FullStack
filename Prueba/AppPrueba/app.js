@@ -1,12 +1,11 @@
-var createError = require('./node_modules/http-errors');
-var express = require('./node_modules/express');
+var createError = require('http-errors');
+var express = require('express');
 var path = require('path');
-var cookieParser = require('./node_modules/cookie-parser');
-var logger = require('./node_modules/morgan');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var profileRouter = require('./routes/profile');
-var shopRouter = require('./routes/shop');
+var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -20,15 +19,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Fecha de entrada
-app.use((req, res, next) => {
-  console.log(new Date());
-  next;
-});
-
 app.use('/', indexRouter);
-app.use('/profile', profileRouter);
-app.use('/shop', shopRouter);
+app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
